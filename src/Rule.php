@@ -90,6 +90,8 @@ class Rule
     }
 
     /**
+     * Compares two rules.
+     *
      * @param Rule $rule1
      * @param Rule $rule2
      * @return boolean
@@ -102,6 +104,10 @@ class Rule
     }
 
     /**
+     * Merges methods of two rules.
+     *
+     * If rules are equal returns clone of first rule. Otherwise returns new rule with merged methods.
+     *
      * @param Rule $rule1
      * @param Rule $rule2
      * @return Rule

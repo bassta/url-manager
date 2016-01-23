@@ -23,6 +23,8 @@ class UrlManager
     protected $rules;
 
     /**
+     * Adds a rule to UrlManager.
+     *
      * @param Rule $rule
      * @return $this
      */
@@ -38,6 +40,8 @@ class UrlManager
     }
 
     /**
+     * Creates a URL using the given route and query parameters.
+     *
      * @param string $route
      * @param array $params
      * @return string
@@ -79,6 +83,14 @@ class UrlManager
     }
 
     /**
+     * Parses the user request against the provided HTTP method verb and URI.
+     *
+     * Returns array (from FastRoute\Dispatcher) with one of the following formats:
+     *
+     *     [FastRoute\Dispatcher::NOT_FOUND]
+     *     [FastRoute\Dispatcher::METHOD_NOT_ALLOWED, ['GET', 'OTHER_ALLOWED_METHODS']]
+     *     [FastRoute\Dispatcher::FOUND, $handler, ['varName' => 'value', ...]]
+     *
      * @param string $method
      * @param string $uri
      * @return array
