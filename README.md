@@ -8,16 +8,8 @@ Install
 
 To install with composer add to composer.json:
 
-```json
-"require": {
-    "bassta/url-manager": "^0.1"
-},
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/bassta/url-manager"
-    }
-]
+```sh
+composer require bassta/url-manager
 ```
 
 Usage
