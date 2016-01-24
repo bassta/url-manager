@@ -23,7 +23,7 @@ require '/path/to/vendor/autoload.php';
 
 $urlManager = new \UrlManager\UrlManager();
 
-$urlManager->addRule(new \UrlManager\Rule('get', '/users', 'user/list'))
+$urlManager->addRule(new \UrlManager\Rule('GET', '/users', 'user/list'))
            ->addRule(new \UrlManager\Rule('POST', '/users', 'user/list'))
            ->addRule(new \UrlManager\Rule('GET', '/user/{id:\d+}', 'user/view'))
            ->addRule(new \UrlManager\Rule('GET', '/articles/{id:\d+}[/{title}]', 'article/view'));
