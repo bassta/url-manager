@@ -32,7 +32,6 @@ $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri        = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $routeInfo  = $urlManager->parseRequest($httpMethod, $uri);
 
-$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         // ... 404 Not Found
