@@ -22,6 +22,9 @@ class Rule
     /** @var string $route */
     protected $route;
 
+    /** @var array $defaultValues */
+    protected $defaultValues = [];
+
     /**
      * Rule constructor.
      * @param string|array $method
@@ -33,6 +36,41 @@ class Rule
         $this->method  = (array)$method;
         $this->pattern = $pattern;
         $this->route   = $route;
+    }
+
+    /**
+     * Merges methods of two rules.
+     *
+     * If rules are equal returns clone of first rule. Otherwise returns new rule with merged methods.
+     *
+     * @param Rule $rule1
+     * @param Rule $rule2
+     * @return Rule
+     */
+    public static function merge(Rule $rule1, Rule $rule2)
+    {
+        if (self::compare($rule1, $rule2)) {
+            return clone $rule1;
+        } else {
+            $result = clone $rule1;
+            $result->setMethod(array_merge((array)$rule1->getMethod(), (array)$rule2->getMethod()));
+
+            return $result;
+        }
+    }
+
+    /**
+     * Compares two rules.
+     *
+     * @param Rule $rule1
+     * @param Rule $rule2
+     * @return boolean
+     */
+    public static function compare(Rule $rule1, Rule $rule2)
+    {
+        return (array)$rule1->getMethod() == (array)$rule2->getMethod()
+            && $rule1->getPattern() == $rule2->getPattern()
+            && $rule1->getRoute() == $rule2->getRoute();
     }
 
     /**
@@ -90,37 +128,20 @@ class Rule
     }
 
     /**
-     * Compares two rules.
-     *
-     * @param Rule $rule1
-     * @param Rule $rule2
-     * @return boolean
+     * @return array
      */
-    public static function compare(Rule $rule1, Rule $rule2)
+    public function getDefault()
     {
-        return (array)$rule1->getMethod() == (array)$rule2->getMethod()
-            && $rule1->getPattern() == $rule2->getPattern()
-            && $rule1->getRoute() == $rule2->getRoute();
+        return $this->defaultValues;
     }
 
     /**
-     * Merges methods of two rules.
-     *
-     * If rules are equal returns clone of first rule. Otherwise returns new rule with merged methods.
-     *
-     * @param Rule $rule1
-     * @param Rule $rule2
-     * @return Rule
+     * @param array $defaultValue
+     * @return $this
      */
-    public static function merge(Rule $rule1, Rule $rule2)
+    public function setDefault(array $defaultValues)
     {
-        if (self::compare($rule1, $rule2)) {
-            return clone $rule1;
-        } else {
-            $result = clone $rule1;
-            $result->setMethod(array_merge((array)$rule1->getMethod(), (array)$rule2->getMethod()));
-
-            return $result;
-        }
+        $this->defaultValues = $defaultValues;
+        return $this;
     }
 }

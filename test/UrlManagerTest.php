@@ -57,4 +57,26 @@ class UrlManagerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('man/view_op', $routeInfo[1]);
         $this->assertEquals([], $routeInfo[2]);
     }
+
+    public function testSetDefault()
+    {
+        $urlManager = new \UrlManager\UrlManager();
+
+        $urlManager->addRule((new \UrlManager\Rule('GET', '/user[/{action}]', 'user/action'))->setDefault([ 'action' => 'view' ]));
+
+        $routeInfo = $urlManager->parseRequest('GET', '/user');
+        $this->assertEquals(FastRoute\Dispatcher::FOUND, $routeInfo[0]);
+        $this->assertEquals('user/action', $routeInfo[1]);
+        $this->assertEquals([ 'action' => 'view' ], $routeInfo[2]);
+
+        $routeInfo = $urlManager->parseRequest('GET', '/user/view');
+        $this->assertEquals(FastRoute\Dispatcher::FOUND, $routeInfo[0]);
+        $this->assertEquals('user/action', $routeInfo[1]);
+        $this->assertEquals([ 'action' => 'view' ], $routeInfo[2]);
+
+        $routeInfo = $urlManager->parseRequest('GET', '/user/print');
+        $this->assertEquals(FastRoute\Dispatcher::FOUND, $routeInfo[0]);
+        $this->assertEquals('user/action', $routeInfo[1]);
+        $this->assertEquals([ 'action' => 'print' ], $routeInfo[2]);
+    }
 }

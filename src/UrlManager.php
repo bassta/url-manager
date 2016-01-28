@@ -104,6 +104,10 @@ class UrlManager
 
         $routeInfo = $dispatcher->dispatch($method, $uri);
 
+        if ($routeInfo[0] == Dispatcher::FOUND) {
+            $routeInfo[2] = array_merge($this->rules[$routeInfo[1]]->getDefault(), $routeInfo[2]);
+        }
+
         return $routeInfo;
     }
 

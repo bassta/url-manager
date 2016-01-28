@@ -26,7 +26,8 @@ $urlManager = new \UrlManager\UrlManager();
 $urlManager->addRule(new \UrlManager\Rule('GET', '/users', 'user/list'))
            ->addRule(new \UrlManager\Rule('POST', '/users', 'user/list'))
            ->addRule(new \UrlManager\Rule('GET', '/user/{id:\d+}', 'user/view'))
-           ->addRule(new \UrlManager\Rule('GET', '/articles/{id:\d+}[/{title}]', 'article/view'));
+           ->addRule(new \UrlManager\Rule('GET', '/articles/{id:\d+}[/{title}]', 'article/view'))
+           ->addRule((new \UrlManager\Rule('GET', '/user[/{action}]', 'user/action'))->setDefault([ 'action' => 'view' ]));
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri        = rawurldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
@@ -46,6 +47,20 @@ switch ($routeInfo[0]) {
         // ... call $handler with $vars
         break;
 }
+```
+
+Rule::setDefault() method used to set optional suffix default value.
+
+```php
+new \UrlManager\Rule('GET', '/user/{action}', 'user/action')
+// will match '/user/view' or '/user/print' but not '/user'
+
+(new \UrlManager\Rule('GET', '/user[/{action}]', 'user/action'))->setDefault([ 'action' => 'view' ])
+// will match '/user' with $routeInfo[2]
+//  array(1) {
+//    'action' =>
+//    string(4) "view"
+//  }
 ```
 
 URL create example:
