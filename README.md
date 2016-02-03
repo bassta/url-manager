@@ -6,7 +6,7 @@ A simple URL manager based on [nikic/fastroute](https://github.com/nikic/fastrou
 Install
 -------
 
-To install with composer add to composer.json:
+To install with composer:
 
 ```sh
 composer require bassta/url-manager
