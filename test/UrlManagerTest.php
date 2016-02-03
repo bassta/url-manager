@@ -17,14 +17,34 @@ class UrlManagerTest extends PHPUnit_Framework_TestCase
                    ->addRule(new \UrlManager\Rule('POST', '/user[/{id:\d+}]', 'user/view_op'));
 
         $this->assertEquals('/users', $urlManager->url('user/list'));
+        $this->assertEquals('/users?foo=bar', $urlManager->url('user/list', [ 'foo' => 'bar' ]));
+        $this->assertEquals('/users?foo=bar&qwe=123', $urlManager->url('user/list', [ 'foo' => 'bar', 'qwe' => 123 ]));
+        $this->assertEquals('/users#fr', $urlManager->url('user/list', [ '#' => 'fr' ]));
+        $this->assertEquals('/users?foo=bar#fr', $urlManager->url('user/list', [ 'foo' => 'bar', '#' => 'fr' ]));
+        $this->assertEquals('/users?foo=bar&qwe=123#fr', $urlManager->url('user/list', [ 'foo' => 'bar', 'qwe' => 123, '#' => 'fr' ]));
+
         $this->assertEquals('/users/', $urlManager->url('user/list_op'));
+        $this->assertEquals('/users/?foo=bar', $urlManager->url('user/list_op', [ 'foo' => 'bar' ]));
+        $this->assertEquals('/users/?foo=bar&qwe=123', $urlManager->url('user/list_op', [ 'foo' => 'bar', 'qwe' => 123 ]));
+        $this->assertEquals('/users/#fr', $urlManager->url('user/list_op', [ '#' => 'fr' ]));
+        $this->assertEquals('/users/?foo=bar#fr', $urlManager->url('user/list_op', [ 'foo' => 'bar', '#' => 'fr' ]));
+        $this->assertEquals('/users/?foo=bar&qwe=123#fr', $urlManager->url('user/list_op', [ 'foo' => 'bar', 'qwe' => 123, '#' => 'fr' ]));
+
         $this->assertEquals('/user/1', $urlManager->url('user/view', [ 'id' => 1 ]));
         $this->assertEquals('/user/1?foo=bar', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar' ]));
         $this->assertEquals('/user/1?foo=bar&qwe=123', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123 ]));
+        $this->assertEquals('/user/1#fr', $urlManager->url('user/view', [ 'id' => 1, '#' => 'fr' ]));
+        $this->assertEquals('/user/1?foo=bar#fr', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar', '#' => 'fr' ]));
+        $this->assertEquals('/user/1?foo=bar&qwe=123#fr', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123, '#' => 'fr' ]));
+
+        $this->assertEquals('/user', $urlManager->url('user/view_op'));
         $this->assertEquals('/user/1', $urlManager->url('user/view_op', [ 'id' => 1 ]));
         $this->assertEquals('/user/1?foo=bar', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar' ]));
         $this->assertEquals('/user/1?foo=bar&qwe=123', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123 ]));
-        $this->assertEquals('/user', $urlManager->url('user/view_op'));
+        $this->assertEquals('/user#fr', $urlManager->url('user/view_op', [ '#' => 'fr' ]));
+        $this->assertEquals('/user/1#fr', $urlManager->url('user/view_op', [ 'id' => 1, '#' => 'fr' ]));
+        $this->assertEquals('/user/1?foo=bar#fr', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar', '#' => 'fr' ]));
+        $this->assertEquals('/user/1?foo=bar&qwe=123#fr', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123, '#' => 'fr' ]));
     }
 
     /**

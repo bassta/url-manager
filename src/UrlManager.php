@@ -66,7 +66,9 @@ class UrlManager
         foreach ($variant as $part) {
             if (is_array($part)) {
                 if (!isset($params[$part[0]])) {
-                    throw new ParameterNotFoundException('Parameter '.$part[0].' for route '.$route.' not found');
+                    throw new ParameterNotFoundException(
+                        'Parameter '.$part[0].' for route '.$route.' not found'
+                    );
                 }
 
                 $url .= $params[$part[0]];
@@ -77,13 +79,22 @@ class UrlManager
         }
 
         if (!empty($params)) {
-            $pairs = [];
+            $pairs    = [];
+            $fragment = '';
 
             foreach ($params as $key => $value) {
-                $pairs[] = $key.'='.$value;
+                if ($key == '#') {
+                    $fragment = '#'.$value;
+                } else {
+                    $pairs[] = $key.'='.$value;
+                }
             }
 
-            $url .= '?'.implode('&', $pairs);
+            if (!empty($pairs)) {
+                $url .= '?'.implode('&', $pairs);
+            }
+
+            $url .= $fragment;
         }
 
         return $url;
