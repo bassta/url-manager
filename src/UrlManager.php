@@ -62,9 +62,20 @@ class UrlManager
         foreach ($variant as $part) {
             if (is_array($part)) {
                 $url .= $params[$part[0]];
+                unset($params[$part[0]]);
             } else {
                 $url .= $part;
             }
+        }
+
+        if (!empty($params)) {
+            $pairs = [];
+
+            foreach ($params as $key => $value) {
+                $pairs[] = $key.'='.$value;
+            }
+
+            $url .= '?'.implode('&', $pairs);
         }
 
         return $url;

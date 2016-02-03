@@ -19,7 +19,11 @@ class UrlManagerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/users', $urlManager->url('user/list'));
         $this->assertEquals('/users/', $urlManager->url('user/list_op'));
         $this->assertEquals('/user/1', $urlManager->url('user/view', [ 'id' => 1 ]));
+        $this->assertEquals('/user/1?foo=bar', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar' ]));
+        $this->assertEquals('/user/1?foo=bar&qwe=123', $urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123 ]));
         $this->assertEquals('/user/1', $urlManager->url('user/view_op', [ 'id' => 1 ]));
+        $this->assertEquals('/user/1?foo=bar', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar' ]));
+        $this->assertEquals('/user/1?foo=bar&qwe=123', $urlManager->url('user/view_op', [ 'id' => 1, 'foo' => 'bar', 'qwe' => 123 ]));
         $this->assertEquals('/user', $urlManager->url('user/view_op'));
     }
 
