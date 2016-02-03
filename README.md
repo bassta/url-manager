@@ -79,4 +79,7 @@ $urlManager->url('user/list');
 
 $urlManager->url('user/view', [ 'id' => 1 ]);
 // returns '/user/1'
+
+$urlManager->url('user/view', [ 'id' => 1, 'foo' => 'bar' ]);
+// returns '/user/1?foo=bar'
 ```
