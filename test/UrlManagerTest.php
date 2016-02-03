@@ -27,6 +27,28 @@ class UrlManagerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/user', $urlManager->url('user/view_op'));
     }
 
+    /**
+     * @expectedException UrlManager\RouteNotFoundException
+     */
+    public function testRouteNotFoundException()
+    {
+        $urlManager = new \UrlManager\UrlManager();
+        $urlManager->addRule(new \UrlManager\Rule('GET', '/users', 'user/list'));
+
+        $this->assertEquals('/users', $urlManager->url('man/view'));
+    }
+
+    /**
+     * @expectedException UrlManager\ParameterNotFoundException
+     */
+    public function testParameterNotFoundException()
+    {
+        $urlManager = new \UrlManager\UrlManager();
+        $urlManager->addRule(new \UrlManager\Rule('GET', '/user/{id:\d+}', 'user/view'));
+
+        $this->assertEquals('/users', $urlManager->url('user/view'));
+    }
+
     public function testParseRequest()
     {
         $urlManager = new \UrlManager\UrlManager();

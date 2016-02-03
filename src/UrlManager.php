@@ -48,6 +48,10 @@ class UrlManager
      */
     public function url($route, $params = [])
     {
+        if (!isset($this->rules[$route])) {
+            throw new RouteNotFoundException('Route '.$route.' not found');
+        }
+
         $variants = $this->getParser()->parse($this->rules[$route]->getPattern());
         $variant  = end($variants);
         $option   = end($variant);
@@ -61,6 +65,10 @@ class UrlManager
         $url = '';
         foreach ($variant as $part) {
             if (is_array($part)) {
+                if (!isset($params[$part[0]])) {
+                    throw new ParameterNotFoundException('Parameter '.$part[0].' for route '.$route.' not found');
+                }
+
                 $url .= $params[$part[0]];
                 unset($params[$part[0]]);
             } else {
